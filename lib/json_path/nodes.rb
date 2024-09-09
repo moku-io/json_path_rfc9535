@@ -19,6 +19,8 @@ module JsonPath
         Array.new path, value
       when Hash
         Object.new path, value
+      else
+        raise UnrecognizedNode, "JSON value expected, #{value.class} found"
       end
     end
   end
