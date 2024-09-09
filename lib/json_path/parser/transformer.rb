@@ -166,7 +166,7 @@ module JsonPath
            comparable2: simple(:comp2) do
              proc do |*args, **kwargs, &block|
                [comp1.call(*args, **kwargs, &block), comp2.call(*args, **kwargs, &block)]
-             end >> proc { _1.public_send op.to_sym, _2 }
+             end >> proc { _1.public_send op.to_s.strip.to_sym, _2 }
            end
 
       rule relative_segments: sequence(:segments) do
