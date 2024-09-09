@@ -7,8 +7,9 @@ module JsonPath
   class Doc
     attr_reader :root_node
 
-    def initialize json_string
-      @root_node = Nodes.parse '$', JSON.parse(json_string)
+    def initialize json_string, parse_json: json_string.is_a?(String)
+      json = (parse_json ? JSON.parse(json_string) : json_string)
+      @root_node = Nodes.parse '$', json
     end
 
     def query json_path
