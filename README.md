@@ -75,12 +75,23 @@ JSON
 doc.query('$.store.bicycle.color')
 ```
 
-The returned object has methods to retrieve the values or the paths of all the retrieved nodes:
+If you already parsed the Json, you can use that instead of the Json string:
 
 ```ruby
-doc.query('$.store.book.*.category').values
+json = JSON.parse('...')
+...
+doc = JsonPath::Doc(json)
+```
+
+The query returns an `Enumerable`, which also has methods to retrieve the values or the paths of all the retrieved nodes:
+
+```ruby
+results = doc.query('$.store.book.*.category')
+results.count
+# => 4
+results.values
 # => ["reference", "fiction", "fiction", "fiction"]
-doc.query('$.store.book.*.category').paths
+results.paths
 # => ["$['store']['book'][0]['category']", "$['store']['book'][1]['category']", "$['store']['book'][2]['category']", "$['store']['book'][3]['category']"]
 ```
 
@@ -92,6 +103,13 @@ results.paths
 # => ["$['store']['book'][1]", "$['store']['book'][3]"]
 results.query('$.author').values
 # => ["Evelyn Waugh", "J. R. R. Tolkien"]
+```
+
+Alternatively, you can query the single nodes:
+
+```ruby
+results.flat_map { _1.query('$.author').values }.join(', ')
+# => "Evelyn Waugh, J. R. R. Tolkien"
 ```
 
 This gem implements most of RFC 9535, with the exception of [function extensions](https://datatracker.ietf.org/doc/html/rfc9535#name-function-extensions) and the related [type system](https://datatracker.ietf.org/doc/html/rfc9535#name-type-system-for-function-ex). It also relies on the underlying Ruby interpreter for string evaluation, meaning that characters don't need to be double-escaped.
