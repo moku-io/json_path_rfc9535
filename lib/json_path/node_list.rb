@@ -1,5 +1,7 @@
 module JsonPath
   class NodeList
+    include Enumerable
+
     attr_reader :nodes
 
     def initialize nodes
@@ -12,12 +14,16 @@ module JsonPath
         .then { self.class.new _1 }
     end
 
+    def each(&block)
+      nodes.each(&block)
+    end
+
     def values
-      nodes.map(&:value)
+      map(&:value)
     end
 
     def paths
-      nodes.map(&:path)
+      map(&:path)
     end
   end
 end
