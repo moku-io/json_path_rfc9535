@@ -1,5 +1,3 @@
-require_relative 'path'
-
 module JsonPath
   class NodeList
     attr_reader :nodes
@@ -8,11 +6,9 @@ module JsonPath
       @nodes = nodes
     end
 
-    def query json_path
-      json_path = Path.new json_path
-
+    def query(...)
       nodes
-        .flat_map { json_path.apply _1 }
+        .flat_map { _1.query(...) }
         .then { self.class.new _1 }
     end
 

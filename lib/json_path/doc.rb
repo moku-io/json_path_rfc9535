@@ -1,7 +1,5 @@
 require 'json'
 require_relative 'nodes'
-require_relative 'path'
-require_relative 'node_list'
 
 module JsonPath
   class Doc
@@ -12,12 +10,8 @@ module JsonPath
       @root_node = Nodes.parse '$', json
     end
 
-    def query json_path
-      json_path = Path.new json_path
-
-      json_path
-        .apply(root_node)
-        .then { NodeList.new _1 }
+    def query(...)
+      root_node.query(...)
     end
 
     def value
