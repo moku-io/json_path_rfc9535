@@ -8,6 +8,12 @@
 ### Bug fixes
 )-->
 
+## 1.1.1 2024-09-10
+
+### New features
+
+- Added `size` to the return value of queries.
+
 ## 1.1.0 2024-09-10
 
 ### New features
