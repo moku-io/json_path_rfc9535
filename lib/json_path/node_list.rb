@@ -25,5 +25,9 @@ module JsonPath
     def paths
       map(&:path)
     end
+
+    def size
+      nodes.size
+    end
   end
 end
